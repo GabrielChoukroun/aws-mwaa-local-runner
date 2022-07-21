@@ -60,6 +60,8 @@ def Coinstat_Push():
         df.columns = final_list
         df.at[3, 'COIN'] = 'TOTAL'
         df['TIMESTAMPUTC'] = int(dt.utcnow().timestamp())
+        df.iloc[:, 2:] = df.iloc[:, 2:].applymap(
+            lambda x: float(x.replace('$', '').replace(',', '')) if type(x) == str else x)
         return df
 
     @task()
