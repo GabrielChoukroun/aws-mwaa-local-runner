@@ -28,7 +28,8 @@ def Coinstat_Push():
         gSheets = GoogleSheets(recon_id)
         # Call the Drive v3 API
         ranges = 'Coin Stats!A1:AV150'
-        response = gSheets.batchGet(ranges=ranges)
+        response = gSheets.batchGet(ranges=ranges,
+                                    valueRenderOption='FORMATTED_VALUE')
         df = pd.DataFrame(response[0]['values'])
         title0 = df.loc[0].fillna('').tolist()
         title1 = df.loc[1].fillna('').tolist()
@@ -60,7 +61,7 @@ def Coinstat_Push():
         df.columns = final_list
         df.at[3, 'COIN'] = 'TOTAL'
         df.at[3, 'PRICE'] = '0'
-        df['PRICE'] = df['PRICE'].map(lambda x:float(x.replace('$','').replace(',','')))
+        df['PRICE'] = df['PRICE'].map(lambda x: float(x.replace('$', '').replace(',', '')))
         df['TIMESTAMPUTC'] = int(dt.utcnow().timestamp())
         df.iloc[:, 2:] = df.iloc[:, 2:].applymap(
             lambda x: float(x.replace('$', '').replace(',', '')) if type(x) == str else x)
