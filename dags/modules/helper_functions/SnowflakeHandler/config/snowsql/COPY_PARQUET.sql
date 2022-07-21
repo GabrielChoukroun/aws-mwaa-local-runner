@@ -1,0 +1,1 @@
+COPY INTO {} FROM @{}/{} match_by_column_name=case_insensitive file_format=(type=parquet);

@@ -1,0 +1,1 @@
+SHOW PRIMARY KEYS IN {}.{}.{};
